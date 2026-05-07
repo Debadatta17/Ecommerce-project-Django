@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gw_rerp_jdfg_vaemwr+@bogkdnj=jf&ykg@6a9*%)%2#=y)$&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -120,9 +121,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 MEDIA_ROOT =  BASE_DIR/'media'
-MIDIA_URL = '/media/'
+MEDIA_URL = '/media/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
@@ -130,8 +135,8 @@ EMAIL_BACKEND =  'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST ='smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS ='True'
-EMAIL_HOST_USER='debadattadash117@gmail.com'
-EMAIL_HOST_PASSWORD ='ywrqmnfidnxdgsun'
+EMAIL_HOST_USER='buybazzar@gmail.com'
+EMAIL_HOST_PASSWORD ='qfdjxqkfftrtkw'
 
 
 
