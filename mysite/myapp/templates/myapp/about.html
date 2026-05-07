@@ -1,0 +1,79 @@
+{% extends 'myapp/base.html' %}
+
+{% block body %}
+
+<div class="bg-gray-100 py-12 px-6">
+
+    <!-- ABOUT ME -->
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8 mb-10">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+
+            <!-- Image -->
+            <div class="flex justify-center">
+                <img src="https://via.placeholder.com/300"
+                     class="rounded-2xl shadow-md w-72 h-72 object-cover"
+                     alt="Profile Image">
+            </div>
+
+            <!-- Content -->
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">About Me</h1>
+                <p class="text-gray-600 leading-relaxed">
+                    I am a passionate developer specializing in building modern web applications using 
+                    <span class="font-semibold text-blue-600">Django</span>. 
+                    This eCommerce platform is designed to deliver a smooth and efficient shopping experience, 
+                    integrating features like cart management, secure checkout, and order processing.
+                </p>
+
+                <p class="text-gray-600 mt-4">
+                    My focus is on writing clean, scalable code and creating user-friendly interfaces 
+                    using technologies like Tailwind CSS.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- PROJECT DETAILS -->
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8 mb-10">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Project Overview</h2>
+
+        <ul class="space-y-2 text-gray-600">
+            <li>✔ Built using Django (Python Web Framework)</li>
+            <li>✔ Features: Product listing, Cart, Checkout, Order system</li>
+            <li>✔ User Authentication and Address Management</li>
+            <li>✔ Clean UI using Tailwind CSS</li>
+        </ul>
+    </div>
+
+
+    <!-- TEAM MEMBERS -->
+    <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Our Team</h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+
+            <!-- Member 1 -->
+            <div class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition">
+                <img src="https://via.placeholder.com/150"
+                     class="w-24 h-24 mx-auto rounded-full mb-3">
+                <h3 class="font-semibold text-lg">Debadatta Dash</h3>
+                <p class="text-gray-500 text-sm">Full Stack Developer</p>
+            </div>
+
+          
+            <!-- Member 2 -->
+            <div class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition">
+                <img src="https://via.placeholder.com/150"
+                     class="w-24 h-24 mx-auto rounded-full mb-3">
+                <h3 class="font-semibold text-lg">JYOTI RANJAN </h3>
+                <p class="text-gray-500 text-sm">Backend Developer</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Success</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f3f4f6;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 5px solid #4CAF50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        animation: scaleUp 0.5s ease-in-out;
+    }
+
+    .checkmark {
+        width: 60px;
+        height: 60px;
+        stroke: #4CAF50;
+        stroke-width: 5;
+        fill: none;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        animation: draw 1s ease forwards 0.5s;
+    }
+
+    @keyframes draw {
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @keyframes scaleUp {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    h1 {
+        margin-top: 20px;
+        color: #333;
+    }
+
+    p {
+        color: #666;
+    }
+
+    .btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #45a049;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="circle">
+        <svg class="checkmark" viewBox="0 0 52 52">
+            <path d="M14 27 L22 35 L38 18"></path>
+        </svg>
+    </div>
+
+    <h1>Order Successful!</h1>
+    <p>Your order has been placed successfully.</p>
+
+    <a href="/" class="btn">Continue Shopping</a>
+
+</div>
+
+</body>
+</html>

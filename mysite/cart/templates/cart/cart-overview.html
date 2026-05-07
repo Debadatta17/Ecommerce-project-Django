@@ -1,0 +1,178 @@
+{% extends 'myapp/base.html' %} {% load static %} {% block body %}
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-4xl font-bold mb-10 text-gray-800 tracking-tight">
+    🛒 My Shopping Cart
+  </h2>
+
+  {% if cart %}
+
+  <form method="post" action="">
+    {% csrf_token %}
+
+    <!-- Removed scroll here -->
+    <div class="rounded-2xl shadow-2xl border border-gray-200 bg-white">
+      <table class="w-full table-auto divide-y divide-gray-200">
+        <!-- Header -->
+        <thead
+          class="bg-gradient-to-r from-gray-100 to-gray-200 text-sm text-gray-700 uppercase tracking-wider"
+        >
+          <tr>
+            <th class="p-5 text-left">Product Image</th>
+            <th class="p-5 text-left">Product</th>
+            <th class="p-5 text-left">Quantity</th>
+            <th class="p-5 text-left">Unit Price</th>
+            <th class="p-5 text-left">Total</th>
+            <th class="p-5 text-left">Actions</th>
+          </tr>
+        </thead>
+
+        <!-- Body -->
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for item in cart %} {% with product=item.product %}
+
+          <tr
+            class="hover:bg-gray-50 hover:shadow-md hover:scale-[1] transition duration-300"
+          >
+            <!-- Image -->
+            <td class="p-5">
+              <div
+                class="w-16 h-16 overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition duration-300"
+              >
+                <img
+                  src="{{ product.image.url }}"
+                  alt="{{ product.title }}"
+                  class="w-full h-full object-cover hover:scale-110 transition duration-300"
+                />
+              </div>
+            </td>
+
+            <!-- Product -->
+            <td
+              class="p-5 font-semibold text-gray-800 text-lg hover:text-blue-600 transition"
+            >
+              {{ product.name }}
+            </td>
+
+            <!-- Quantity -->
+            <td class="p-5">
+              <select
+                id="select{{product.id}}"
+                class="border border-gray-300 rounded-lg px-3 py-2 shadow-sm hover:shadow-md focus:ring-2 focus:ring-blue-500 outline-none transition"
+              >
+                <option value="{{item.qty}}" selected>{{item.qty}}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </td>
+
+            <!-- Price -->
+            <td class="p-5 text-gray-700 font-medium">₹{{ item.price }}</td>
+
+            <!-- Total -->
+            <td
+              class="p-5 text-green-600 font-bold text-lg hover:scale-110 transition"
+            >
+              ₹{{ item.total }}
+            </td>
+
+            <!-- Actions -->
+            <td class="p-5 space-x-2">
+              <button
+                type="button"
+                name="update"
+                data-index="{{product.id}}"
+                value="{{product.id}}"
+                class="update inline-block bg-blue-600 hover:bg-blue-700 active:scale-90 text-white px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300"
+              >
+                 Update
+              </button>
+
+              <button
+                type="button"
+                name="delete"
+                data-index="{{product.id}}"
+                value="{{product.id}}"
+                class="delete inline-block bg-red-500 hover:bg-red-600 active:scale-90 text-white px-4 py-2 rounded-lg text-sm shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300"
+              >
+                 Delete
+              </button>
+            </td>
+          </tr>
+
+          {% endwith %} {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </form>
+
+  <!-- Total Section -->
+  <div class="mt-10 text-right pr-2">
+    <div
+      class="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300"
+    >
+      <strong class="text-xl font-semibold" id="toral">
+        Total: ₹{{ cart.get_total_price }}
+      </strong>
+    </div>
+  </div>
+
+  {% else %}
+
+  <!-- Empty Cart -->
+  <div class="text-center py-20">
+    <p class="text-gray-500 text-xl">😕 Your cart is empty.</p>
+  </div>
+
+  {% endif %}
+</div>
+
+<script>
+  $(document).on("click", ".delete", function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_delete'%}",
+      data: {
+        product_id: $(this).data("index"),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
+      success: function(json){
+        location.reload();
+        document.getElementById('cart-qty').textContent = json.qty;
+        document.getElementById('total').textContent=json.total
+      }
+    });
+  });
+
+
+  //Update Functionality
+
+  $(document).on("click",".update",function(e){
+    e.preventDefault() 
+    var productID = $(this).data("index");
+    var productQTY= $("#select"+productID+"  option:selected").text();
+    console.log(productID)
+    console.log(productQTY)
+
+    $.ajax({
+      type:"POST",
+      url:'{% url 'cart_update' %}',
+      data:{
+          product_id: $(this).data("index"),
+          product_quantity: $("#select"+productID+" option:selected").text(),     
+          csrfmiddlewaretoken: "{{ csrf_token }}",
+          action: "post",
+        },
+        success:function(e){
+          location.reload();
+        }
+    })
+
+
+  });
+</script>
+
+{% endblock %}

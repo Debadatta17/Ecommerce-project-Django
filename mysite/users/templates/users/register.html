@@ -1,0 +1,64 @@
+{% extends 'myapp/base.html' %}
+
+{% block body %}
+
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 px-4">
+
+  <!-- Increased width + reduced padding -->
+
+  <div class="w-full max-w-lg bg-white/90 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-gray-200">
+
+```
+<!-- Header -->
+<div class="text-center mb-4">
+  <h2 class="text-2xl font-bold text-gray-800">Create Account</h2>
+  <p class="text-xs text-gray-500 mt-1">Quick & secure signup</p>
+</div>
+
+<form method="POST" class="space-y-3">
+  {% csrf_token %}
+
+  <!-- Non-field errors -->
+  {% if form.non_field_errors %}
+    <div class="bg-red-100 text-red-600 p-2 rounded text-sm">
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  <!-- Fields -->
+  {% for field in form %}
+  <div class="space-y-1">
+    <label class="text-xs font-medium text-gray-600">
+      {{ field.label }}
+    </label>
+
+    {{ field }}
+
+    {% for error in field.errors %}
+      <p class="text-xs text-red-500">{{ error }}</p>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+  <!-- Button -->
+  <button
+    type="submit"
+    class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-semibold py-2 rounded-lg shadow hover:from-blue-600 hover:to-indigo-700 transition"
+  >
+    Register
+  </button>
+
+  <!-- Footer -->
+  <p class="text-center text-xs text-gray-500 mt-2">
+    Already have an account?
+    <a href="#" class="text-blue-600 hover:underline font-medium">Login</a>
+  </p>
+
+</form>
+
+
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'myapp/base.html' %}
+{% block body %}
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+
+  <div class="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
+
+    <!-- Heading -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      Checkout
+    </h1>
+    <p class="text-gray-500 mb-6">
+      Please confirm your shipping details before placing the order
+    </p>
+
+    <!-- Form -->
+    <form method="POST" id="checkout-form" class="space-y-5">
+      {% csrf_token %}
+
+      <!-- Full Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Full Name
+        </label>
+        <input type="text" value="{{ address.full_name }}"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Address 1 -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Address Line 1
+        </label>
+        <input type="text" value="{{ address.line1 }}"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Address 2 -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Address Line 2
+        </label>
+        <input type="text" value="{{ address.line2 }}"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Grid Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- City -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            City
+          </label>
+          <input type="text" value="{{ address.city }}"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <!-- State -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            State
+          </label>
+          <input type="text" value="{{ address.state }}"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+      </div>
+
+      <!-- Grid Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Postal Code -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Postal Code
+          </label>
+          <input type="text" value="{{ address.postal_code }}"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <!-- Country -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Country
+          </label>
+          <input type="text" value="{{ address.country }}"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+      </div>
+
+      <!-- Button -->
+      <button type="submit"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+        Complete Order
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- jQuery (if not already included) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $("#checkout-form").on("submit", function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'place-order' %}",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        action: "post",
+      },
+      success: function (json) {
+        window.location.replace("{% url 'order-success' %}");
+      },
+      error: function () {
+        window.location.replace("{% url 'order-failed' %}");
+      },
+    });
+  });
+</script>
+
+{% endblock %}
